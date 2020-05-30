@@ -1,34 +1,47 @@
 <html>
     <head>
         <style>
+            @font-face {
+                font-family: smallest-pixel-7;
+                src: url(smallest-pixel-7-spacing.otf);
+            }
+
             body {
-                font-size: 0;
+                font-family: smallest-pixel-7;
+            }
+
+            h1 {
+                font-size: 60px;
+                font-weight: normal;
             }
 
             #word-container {
                 display: block;
                 font-size: 0;
+                margin-bottom: 20px;
             }
 
-            .letter {
+            .word-space {
                 font-size: 80px;
                 border-bottom: 3px solid black;
                 width: 80px;
                 height: 80px;
                 display: inline-block;
                 margin-right: 5px;
+                text-align: center;
             }
-            .letter:after{
+            .word-space:after{
                 content: '\00a0';
             }
 
             #letters-container {
                 font-size: 0;
                 display: block;
-                width: 500px;
+                width: 450px;
                 margin: 0;
             }
             #letters-container button {
+                font-family: smallest-pixel-7;
                 width: 50px;
                 height: 50px;
                 margin: 0;
@@ -44,7 +57,7 @@
                 const generatedWord = generateWord();
                 addLettersForWord(generatedWord);
                 const letterButtons = document.querySelectorAll('#letters-container button');
-                const lettersOfWordSpans = document.querySelectorAll('.letter');
+                const wordSpaceSpans = document.querySelectorAll('.word-space');
 
                 letterButtons.forEach((button) => {
                     button.addEventListener('click', letterClick);
@@ -56,7 +69,7 @@
                     if (generatedWord.includes(letter)) {
                         generatedWord.split('').forEach((wordLetter, index) => {
                             if (letter === wordLetter) {
-                                lettersOfWordSpans[index].innerHTML = letter;
+                                wordSpaceSpans[index].innerHTML = letter;
                             }
                         });
                     } else {
@@ -79,10 +92,9 @@
                 const wordContainer = document.getElementById('word-container');
                 for (let i = 0; i < word.length; i++) {
                     const letter = word[i];
-                    const letterSpan = document.createElement('span');
-                    letterSpan.classList.add('letter');
-                    // letterSpan.innerHTML = letter;
-                    wordContainer.appendChild(letterSpan);
+                    const wordSpace = document.createElement('span');
+                    wordSpace.classList.add('word-space');
+                    wordContainer.appendChild(wordSpace);
                 }
             }
 
@@ -90,6 +102,7 @@
         </script>
     </head>
 </html>
+<h1>Jen's Hangman</h1>
 
 <div id="word-container">
     <!-- <span class="letter"> </span> 

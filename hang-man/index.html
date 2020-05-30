@@ -1,0 +1,128 @@
+<html>
+    <head>
+        <style>
+            body {
+                font-size: 0;
+            }
+
+            #word-container {
+                display: block;
+                font-size: 0;
+            }
+
+            .letter {
+                font-size: 80px;
+                border-bottom: 3px solid black;
+                width: 80px;
+                height: 80px;
+                display: inline-block;
+                margin-right: 5px;
+            }
+            .letter:after{
+                content: '\00a0';
+            }
+
+            #letters-container {
+                font-size: 0;
+                display: block;
+                width: 500px;
+                margin: 0;
+            }
+            #letters-container button {
+                width: 50px;
+                height: 50px;
+                margin: 0;
+                padding: 0;
+                font-size: 40px;
+            }
+        </style>
+        <script>
+            window.onload = function () {
+                const TOTAL_OF_LIVES = 5;
+                let livesRemaining = TOTAL_OF_LIVES;
+
+                const generatedWord = generateWord();
+                addLettersForWord(generatedWord);
+                const letterButtons = document.querySelectorAll('#letters-container button');
+                const lettersOfWordSpans = document.querySelectorAll('.letter');
+
+                letterButtons.forEach((button) => {
+                    button.addEventListener('click', letterClick);
+                });
+
+                function letterClick(e) {
+                    const letter = e.target.innerHTML.toLowerCase();
+                    e.target.disabled = true;
+                    if (generatedWord.includes(letter)) {
+                        generatedWord.split('').forEach((wordLetter, index) => {
+                            if (letter === wordLetter) {
+                                lettersOfWordSpans[index].innerHTML = letter;
+                            }
+                        });
+                    } else {
+                        livesRemaining--;
+                    }
+                    updateLivesRemaining(livesRemaining);
+                }
+            }
+
+            function updateLivesRemaining(livesRemaining) {
+                console.log(livesRemaining);
+            }
+
+            function generateWord(){
+                const easy = ['able','acid','aged','also','area','army','away','baby','back','ball','band','bank','base','bath','bear','beat','been','beer','bell','belt','best','bill','bird','blow','blue','boat','body','bomb','bond','bone','book','boom','born','boss','both','bowl','bulk','burn','bush','busy','call','calm','came','camp','card','care','case ','cash'];
+                return easy[Math.floor(Math.random() * Math.floor(easy.length))];
+            }
+
+            function addLettersForWord(word) {
+                const wordContainer = document.getElementById('word-container');
+                for (let i = 0; i < word.length; i++) {
+                    const letter = word[i];
+                    const letterSpan = document.createElement('span');
+                    letterSpan.classList.add('letter');
+                    // letterSpan.innerHTML = letter;
+                    wordContainer.appendChild(letterSpan);
+                }
+            }
+
+
+        </script>
+    </head>
+</html>
+
+<div id="word-container">
+    <!-- <span class="letter"> </span> 
+    <span class="letter">A</span> 
+    <span class="letter">A</span> 
+    <span class="letter">A</span>  -->
+</div>
+
+<div id="letters-container">
+    <button>A</button>
+    <button>B</button>
+    <button>C</button>
+    <button>D</button>
+    <button>E</button>
+    <button>F</button>
+    <button>G</button>
+    <button>H</button>
+    <button>I</button>
+    <button>J</button>
+    <button>K</button>
+    <button>L</button>
+    <button>M</button>
+    <button>N</button>
+    <button>O</button>
+    <button>P</button>
+    <button>Q</button>
+    <button>R</button>
+    <button>S</button>
+    <button>T</button>
+    <button>U</button>
+    <button>V</button>
+    <button>W</button>
+    <button>X</button>
+    <button>Y</button>
+    <button>Z</button>
+</div>

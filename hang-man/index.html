@@ -8,14 +8,17 @@
 
             body {
                 font-family: smallest-pixel-7;
+                /* background-color: #28b9f5; */
             }
 
             h1 {
                 font-size: 60px;
                 font-weight: normal;
+                text-align: center;
             }
 
             #word-container {
+                text-align: center;
                 display: block;
                 font-size: 0;
                 margin-bottom: 20px;
@@ -39,6 +42,7 @@
                 display: block;
                 width: 450px;
                 margin: 0;
+                background-color: #1f99ae;
             }
             #letters-container button {
                 font-family: smallest-pixel-7;
@@ -48,10 +52,26 @@
                 padding: 0;
                 font-size: 40px;
             }
+            #pic-container {
+                width: 450px;
+                height: 393px;
+                background-color: #28b9f5;
+                background-image: url('frogs/bg.png');
+            }
+
+            #container {
+                width: 450px;
+                background-color: #28b9f5;
+            }
+
+            #pic-container img {
+                margin-left: 90px;
+            }
+
         </style>
         <script>
             window.onload = function () {
-                const TOTAL_OF_LIVES = 5;
+                const TOTAL_OF_LIVES = 8;
                 let livesRemaining = TOTAL_OF_LIVES;
 
                 const generatedWord = generateWord();
@@ -77,11 +97,16 @@
                     }
                     updateLivesRemaining(livesRemaining);
                 }
+
+                function updateLivesRemaining(livesRemaining) {
+                    if(livesRemaining === 0) {
+                        return;
+                    }
+                    document.getElementById('pic-container').innerHTML = `<img src="frogs/${TOTAL_OF_LIVES - livesRemaining + 1}.png">`
+                }
             }
 
-            function updateLivesRemaining(livesRemaining) {
-                console.log(livesRemaining);
-            }
+
 
             function generateWord(){
                 const easy = ['able','acid','aged','also','area','army','away','baby','back','ball','band','bank','base','bath','bear','beat','been','beer','bell','belt','best','bill','bird','blow','blue','boat','body','bomb','bond','bone','book','boom','born','boss','both','bowl','bulk','burn','bush','busy','call','calm','came','camp','card','care','case ','cash'];
@@ -102,40 +127,46 @@
         </script>
     </head>
 </html>
-<h1>Jen's Hangman</h1>
 
-<div id="word-container">
-    <!-- <span class="letter"> </span> 
-    <span class="letter">A</span> 
-    <span class="letter">A</span> 
-    <span class="letter">A</span>  -->
-</div>
+<div id="container">
+    <h1>Jen's Hangman</h1>
+    <div id="word-container">
+        <!-- <span class="letter"> </span> 
+        <span class="letter">A</span> 
+        <span class="letter">A</span> 
+        <span class="letter">A</span>  -->
+    </div>
+    <div id="pic-container">
+        <img src="frogs/1.png">
+    </div>
 
-<div id="letters-container">
-    <button>A</button>
-    <button>B</button>
-    <button>C</button>
-    <button>D</button>
-    <button>E</button>
-    <button>F</button>
-    <button>G</button>
-    <button>H</button>
-    <button>I</button>
-    <button>J</button>
-    <button>K</button>
-    <button>L</button>
-    <button>M</button>
-    <button>N</button>
-    <button>O</button>
-    <button>P</button>
-    <button>Q</button>
-    <button>R</button>
-    <button>S</button>
-    <button>T</button>
-    <button>U</button>
-    <button>V</button>
-    <button>W</button>
-    <button>X</button>
-    <button>Y</button>
-    <button>Z</button>
+
+    <div id="letters-container">
+        <button>A</button>
+        <button>B</button>
+        <button>C</button>
+        <button>D</button>
+        <button>E</button>
+        <button>F</button>
+        <button>G</button>
+        <button>H</button>
+        <button>I</button>
+        <button>J</button>
+        <button>K</button>
+        <button>L</button>
+        <button>M</button>
+        <button>N</button>
+        <button>O</button>
+        <button>P</button>
+        <button>Q</button>
+        <button>R</button>
+        <button>S</button>
+        <button>T</button>
+        <button>U</button>
+        <button>V</button>
+        <button>W</button>
+        <button>X</button>
+        <button>Y</button>
+        <button>Z</button>
+    </div>
 </div>

@@ -79,20 +79,45 @@
                 position: absolute;
             }
 
+            #game-over {
+                position: absolute;
+                background-color: #30b41f;
+                left: 100px;
+                width: 215px;
+                font-size: 32px;
+                text-align: center;
+                padding: 10px;
+                border: 4px solid #258715;
+            }
+
+            #game-over button {
+                background-color: #9a3b0d;
+                font-family: smallest-pixel-7;
+                font-size: 31px;
+                border: none;
+                color: white;
+                cursor: pointer;
+            }
+            #game-over button:hover {
+                background-color: #1f98ae;
+            }
+            
         </style>
         <script>
             window.onload = function () {
-                const TOTAL_OF_LIVES = 8;
+                const TOTAL_OF_LIVES = 7;
                 let livesRemaining = TOTAL_OF_LIVES;
 
-                const generatedWord = generateWord();
+                let generatedWord = generateWord();
                 addLettersForWord(generatedWord);
                 const letterButtons = document.querySelectorAll('#letters-container button');
-                const wordSpaceSpans = document.querySelectorAll('.word-space');
+                let wordSpaceSpans = document.querySelectorAll('.word-space');
 
                 letterButtons.forEach((button) => {
                     button.addEventListener('click', letterClick);
                 });
+
+                document.querySelector('#game-over button').addEventListener('click', reset);
 
                 function letterClick(e) {
                     const letter = e.target.innerHTML.toLowerCase();
@@ -106,15 +131,35 @@
                     } else {
                         livesRemaining--;
                         addUsedLetter(letter);
+                        updateLivesRemaining(livesRemaining);
                     }
+                }
+                
+                function reset() {
+                    livesRemaining = TOTAL_OF_LIVES;
                     updateLivesRemaining(livesRemaining);
+                    generatedWord = generateWord();
+                    
+                    const wordContainer = document.getElementById('word-container').innerHTML = '';
+                    document.getElementById("game-over").style.display = "none";
+                    document.getElementById('pic-container__letters').innerHTML = '';
+                    letterButtons.forEach((button) => {
+                        button.disabled = false;
+                    });
+                    addLettersForWord(generatedWord);
+                    wordSpaceSpans = document.querySelectorAll('.word-space');
+
                 }
 
                 function updateLivesRemaining(livesRemaining) {
+                    document.getElementById('pic-container-img').innerHTML = `<img src="frogs/${TOTAL_OF_LIVES - livesRemaining + 1}.png">`
                     if (livesRemaining === 0) {
+                        generatedWord.split('').forEach((wordLetter, index) => {
+                            wordSpaceSpans[index].innerHTML = wordLetter;
+                        });
+                        document.getElementById("game-over").style.display = "block";
                         return;
                     }
-                    document.getElementById('pic-container-img').innerHTML = `<img src="frogs/${TOTAL_OF_LIVES - livesRemaining + 1}.png">`
                    
                 }
 
@@ -164,6 +209,10 @@
         <span class="letter">A</span>  -->
     </div>
     <div id="pic-container">
+        <div id="game-over" style="display: none">
+            <h2>Game over</h2>
+            <button>Try again</button>
+        </div>
         <div id="pic-container__letters">
             <!-- <span>A</span>
             <span>B</span>

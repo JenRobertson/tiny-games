@@ -105,17 +105,11 @@
             
         </style>
         <script>
+            const TOTAL_OF_LIVES = 7;
+            let livesRemaining, gameOver, lettersCompleted, generatedWord, letterButtons, wordSpaceSpans;
             window.onload = function () {
-                const TOTAL_OF_LIVES = 7;
-                let livesRemaining = TOTAL_OF_LIVES;
-                let gameOver = false;
-                let lettersCompleted = 0;
 
-                let generatedWord = generateWord();
-                console.log(generatedWord);
-                addLettersForWord(generatedWord);
-                const letterButtons = document.querySelectorAll('#letters-container button');
-                let wordSpaceSpans = document.querySelectorAll('.word-space');
+                init();
 
                 letterButtons.forEach((button) => {
                     button.addEventListener('click', letterClick);
@@ -146,11 +140,6 @@
                 }
                 
                 function reset() {
-                    lettersCompleted = 0;
-                    livesRemaining = TOTAL_OF_LIVES;
-                    updateLivesRemaining(livesRemaining);
-                    generatedWord = generateWord();
-                    console.log(generatedWord);
                     
                     const wordContainer = document.getElementById('word-container').innerHTML = '';
                     document.getElementById("game-over").style.display = "none";
@@ -159,9 +148,9 @@
                     letterButtons.forEach((button) => {
                         button.disabled = false;
                     });
-                    addLettersForWord(generatedWord);
-                    wordSpaceSpans = document.querySelectorAll('.word-space');
                     gameOver = false;
+                    init();
+                    updateLivesRemaining(livesRemaining);
                 }
 
                 function updateLivesRemaining(livesRemaining) {
@@ -189,6 +178,16 @@
                     const picContainerLetters = document.getElementById('pic-container__letters');
                     picContainerLetters.appendChild(usedLetterSpan);
                     picContainerLetters.style.top = ys[TOTAL_OF_LIVES - livesRemaining - 1];
+                }
+
+                function init() {
+                    livesRemaining = TOTAL_OF_LIVES;
+                    gameOver = false;
+                    lettersCompleted = 0;
+                    generatedWord = generateWord();
+                    addLettersForWord(generatedWord);
+                    letterButtons = document.querySelectorAll('#letters-container button');
+                    wordSpaceSpans = document.querySelectorAll('.word-space');
                 }
             }
 

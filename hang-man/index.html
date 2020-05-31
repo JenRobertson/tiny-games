@@ -57,6 +57,7 @@
                 height: 393px;
                 background-color: #28b9f5;
                 background-image: url('frogs/bg.png');
+                position: relative;
             }
 
             #container {
@@ -66,6 +67,16 @@
 
             #pic-container img {
                 margin-left: 90px;
+            }
+
+            #pic-container span {
+                position: absolute;
+                font-size: 60px;
+                top: 162px;
+            }
+
+            #pic-container__letters {
+                position: absolute;
             }
 
         </style>
@@ -94,15 +105,31 @@
                         });
                     } else {
                         livesRemaining--;
+                        addUsedLetter(letter);
                     }
                     updateLivesRemaining(livesRemaining);
                 }
 
                 function updateLivesRemaining(livesRemaining) {
-                    if(livesRemaining === 0) {
+                    if (livesRemaining === 0) {
                         return;
                     }
-                    document.getElementById('pic-container').innerHTML = `<img src="frogs/${TOTAL_OF_LIVES - livesRemaining + 1}.png">`
+                    document.getElementById('pic-container-img').innerHTML = `<img src="frogs/${TOTAL_OF_LIVES - livesRemaining + 1}.png">`
+                   
+                }
+
+                function addUsedLetter(letter) {
+                    const lefts = [180, 210, 240, 270, 300, 220, 250, 290];
+                    const ysletters = [163, 163, 163, 163, 163, 134, 134, 134];
+                    const ys = [-22, -14, -6, -2, 1, 13, 105]
+                    const usedLetterSpan = document.createElement('span');
+                    usedLetterSpan.innerHTML = letter;
+
+                    usedLetterSpan.style.left = lefts[TOTAL_OF_LIVES - livesRemaining];
+                    usedLetterSpan.style.top = ysletters[TOTAL_OF_LIVES - livesRemaining];
+                    const picContainerLetters = document.getElementById('pic-container__letters');
+                    picContainerLetters.appendChild(usedLetterSpan);
+                    picContainerLetters.style.top = ys[TOTAL_OF_LIVES - livesRemaining - 1];
                 }
             }
 
@@ -137,7 +164,14 @@
         <span class="letter">A</span>  -->
     </div>
     <div id="pic-container">
-        <img src="frogs/1.png">
+        <div id="pic-container__letters">
+            <!-- <span>A</span>
+            <span>B</span>
+            <span>C</span> -->
+        </div>
+        <div id="pic-container-img">
+            <img src="frogs/1.png">
+        </div>
     </div>
 
 

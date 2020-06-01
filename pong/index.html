@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <style>
+            @font-face {
+                font-family: smallest-pixel-7;
+                src: url(smallest-pixel-7-spacing.otf);
+            }
+
+            canvas {
+                width: 600px;
+                height: 400px;
+                background-color: black;
+            }
+
+            
+        </style>
+        <script>
+            const STORE = {
+                paddle1: {
+                    y: 0,
+                },
+                paddle2: {
+                    y: 0,
+                }
+            }
+            const paddleSpeed = 5;
+            let ctx;
+            let keyPresses = {}
+            window.onload = function () {
+                window.addEventListener('keydown', this.keydown.bind(this), true);
+                window.addEventListener('keyup', this.keyup.bind(this), true);
+                const paddle1 = document.getElementById('paddle1');
+                const paddle2 = document.getElementById('paddle2');
+                ctx = document.querySelector('canvas').getContext('2d');
+
+                window.setInterval(frame, 100);
+            }
+
+            function frame() {
+                ctx.clearRect(0, 0, 1000, 1000);
+                ctx.drawImage(paddle1, 50, STORE.paddle1.y);
+                ctx.drawImage(paddle2, 550, STORE.paddle2.y);
+
+
+            }
+            document.addEventListener('keypress', (e) => {
+                console.log(keyPresses)
+                if (keyPresses.w) {
+                    STORE.paddle1.y -= paddleSpeed;
+                } else if (keyPresses.s) {
+                    STORE.paddle1.y += paddleSpeed;
+                }
+                if (keyPresses.o) {
+                    STORE.paddle2.y -= paddleSpeed;
+                } else if (keyPresses.l) {
+                    STORE.paddle2.y += paddleSpeed;
+                }
+            });
+
+            function keydown() {
+                keyPresses[event.key] = true;
+            }
+
+            function keyup() {
+                keyPresses[event.key] = false;
+            }
+        </script>
+    </head>
+</html>
+
+<div id="container">
+    <h1>Jen's Hangman</h1>
+    <div style='display: none'>
+        <img src='img/paddle1.png' id='paddle1'>
+        <img src='img/paddle2.png' id='paddle2'>
+    </div>
+    <canvas height='400' width='600'></canvas>
+
+
+</div>

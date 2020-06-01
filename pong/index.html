@@ -21,26 +21,55 @@
                 },
                 paddle2: {
                     y: 0,
+                },
+                ball: {
+                    x: 10,
+                    y: 10,
+                    direction: 'tr',
+                    size: 21
                 }
             }
             const paddleSpeed = 5;
+            const ballSpeed = 8;
+            const width = 600;
+            const height = 400;
             let ctx;
             let keyPresses = {}
             window.onload = function () {
                 window.addEventListener('keydown', this.keydown.bind(this), true);
                 window.addEventListener('keyup', this.keyup.bind(this), true);
-                const paddle1 = document.getElementById('paddle1');
-                const paddle2 = document.getElementById('paddle2');
+                // const paddle1 = document.getElementById('paddle1');
+                // const paddle2 = document.getElementById('paddle2');
+                // const ballImg = document.getElementById('ball');
                 ctx = document.querySelector('canvas').getContext('2d');
 
                 window.setInterval(frame, 100);
             }
 
             function frame() {
+                const { ball } = STORE;
+                if (ball.direction === 'tr'){
+                    console.log('move')
+                    ball.x+=ballSpeed;
+                    ball.y+=ballSpeed;
+                }
+                if (ball.x >= width - ball.size) {
+                    console.log(1)
+                    ball.direction = '';
+                }
+                if (ball.y + ball.size >= height ) {
+                    ball.direction = '';console.log(2)
+                }
+                if (ball.y <= 0) {
+                    ball.direction = '';console.log(3)
+                }
+                if (ball.x <= 0) {
+                    ball.direction = '';console.log(4)
+                }
                 ctx.clearRect(0, 0, 1000, 1000);
-                ctx.drawImage(paddle1, 50, STORE.paddle1.y);
-                ctx.drawImage(paddle2, 550, STORE.paddle2.y);
-
+                ctx.drawImage(paddle1Img, 50, STORE.paddle1.y);
+                ctx.drawImage(paddle2Img, 550, STORE.paddle2.y);
+                ctx.drawImage(ballImg, ball.x, ball.y);
 
             }
             document.addEventListener('keypress', (e) => {
@@ -70,9 +99,9 @@
 
 <div id="container">
     <h1>Jen's Hangman</h1>
-    <div style='display: none'>
-        <img src='img/paddle1.png' id='paddle1'>
-        <img src='img/paddle2.png' id='paddle2'>
+        <img src='img/paddle1.png' id='paddle1Img'>
+        <img src='img/paddle2.png' id='paddle2Img'>
+        <img src='img/ball.png' id='ballImg'>
     </div>
     <canvas height='400' width='600'></canvas>
 
